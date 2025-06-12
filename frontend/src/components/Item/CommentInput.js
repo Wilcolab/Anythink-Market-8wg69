@@ -7,53 +7,41 @@ const mapDispatchToProps = (dispatch) => ({
   onSubmit: (payload) => dispatch({ type: ADD_COMMENT, payload }),
 });
 
-class CommentInput extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      body: "",
-    };
-
-    this.setBody = (ev) => {
-      this.setState({ body: ev.target.value });
-    };
-
-    this.createComment = async (ev) => {
-      ev.preventDefault();
-      agent.Comments.create(this.props.slug, {
-        body: this.state.body,
+function CommentInput({currentUser, slug}){
+  const [state, setState] = useState({body: ''});
+  async function createComment(e){
+    e.preventDefault();
+    agent.Comments.create(slug, {
+        body: state.body,
       }).then((payload) => {
-        this.props.onSubmit(payload);
+        onSubmit(payload);
       });
-      this.setState({ body: "" });
+      setState({ body: "" });
     };
-  }
-
-  render() {
+  
     return (
-      <form className="card comment-form m-2" onSubmit={this.createComment}>
+      <form className="card comment-form m-2" onSubmit={createComment}>
         <div className="card-block">
           <textarea
             className="form-control"
             placeholder="Write a comment..."
-            value={this.state.body}
-            onChange={this.setBody}
+            value={state.body}
+            onChange={e => setState(e.target.value)}
             rows="3"
           ></textarea>
         </div>
         <div className="card-footer">
           <img
-            src={this.props.currentUser.image}
+            src={currentUser.image}
             className="user-pic mr-2"
-            alt={this.props.currentUser.username}
+            alt={currentUser.username}
           />
           <button className="btn btn-sm btn-primary" type="submit">
             Post Comment
           </button>
         </div>
       </form>
-    );
-  }
+  )
 }
 
 export default connect(() => ({}), mapDispatchToProps)(CommentInput);
