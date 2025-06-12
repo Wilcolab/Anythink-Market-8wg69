@@ -7,9 +7,11 @@ const mapDispatchToProps = (dispatch) => ({
   onSubmit: (payload) => dispatch({ type: ADD_COMMENT, payload }),
 });
 
+// This component allows users to input comments on an item.
+
 function CommentInput({currentUser, slug}){
   const [state, setState] = useState({body: ''});
-  
+
   async function createComment(e){
     e.preventDefault();
     const payload = await agent.Comments.create(slug, {
