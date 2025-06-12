@@ -8,6 +8,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 // This component allows users to input comments on an item.
+// Fixed the props destructuring to match the expected props. 
 function CommentInput({ currentUser, slug, onSubmit }) {
   const [state, setState] = useState({ body: '' });
 
