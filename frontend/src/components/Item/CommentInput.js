@@ -9,6 +9,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 // This component allows users to input comments on an item.
 // Fixed the props destructuring to match the expected props. 
+// placeholoder comments 
 function CommentInput({ currentUser, slug, onSubmit }) {
   const [state, setState] = useState({ body: '' });
 
