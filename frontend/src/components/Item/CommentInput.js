@@ -3,6 +3,7 @@ import agent from "../../agent";
 import { connect } from "react-redux";
 import { ADD_COMMENT } from "../../constants/actionTypes";
 
+// CommentInput Component
 export function CommentInput({ currentUser, slug, onSubmit }) {
   const [state, setState] = useState({ body: "" });
 
