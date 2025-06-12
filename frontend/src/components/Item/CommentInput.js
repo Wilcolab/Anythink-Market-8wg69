@@ -9,14 +9,14 @@ const mapDispatchToProps = (dispatch) => ({
 
 function CommentInput({currentUser, slug}){
   const [state, setState] = useState({body: ''});
+  
   async function createComment(e){
     e.preventDefault();
-    agent.Comments.create(slug, {
-        body: state.body,
-      }).then((payload) => {
-        onSubmit(payload);
-      });
-      setState({ body: "" });
+    const payload = await agent.Comments.create(slug, {
+      body: state.body,
+    });
+    onSubmit(payload);
+    setState({ body: '' });
     };
   
     return (
@@ -26,7 +26,7 @@ function CommentInput({currentUser, slug}){
             className="form-control"
             placeholder="Write a comment..."
             value={state.body}
-            onChange={e => setState(e.target.value)}
+            onChange={e => setState({ body: e.target.value })}
             rows="3"
           ></textarea>
         </div>
