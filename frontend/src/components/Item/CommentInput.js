@@ -1,25 +1,18 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import agent from "../../agent";
 import { connect } from "react-redux";
 import { ADD_COMMENT } from "../../constants/actionTypes";
 
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit: (payload) => dispatch({ type: ADD_COMMENT, payload }),
-});
-
-// This component allows users to input comments on an item.
-// Fixed the props destructuring to match the expected props. 
-// placeholoder comments 
-function CommentInput({ currentUser, slug, onSubmit }) {
-  const [state, setState] = useState({ body: '' });
+export function CommentInput({ currentUser, slug, onSubmit }) {
+  const [state, setState] = useState({ body: "" });
 
   async function createComment(e) {
     e.preventDefault();
     const payload = await agent.Comments.create(slug, {
       body: state.body,
     });
-    onSubmit(payload);
-    setState({ body: '' });
+    onSubmit && onSubmit(payload);
+    setState({ body: "" });
   }
 
   return (
@@ -47,4 +40,11 @@ function CommentInput({ currentUser, slug, onSubmit }) {
   );
 }
 
-export default connect(() => ({}), mapDispatchToProps)(CommentInput);
+const mapDispatchToProps = dispatch => ({
+  onSubmit: payload => dispatch({ type: ADD_COMMENT, payload }),
+});
+
+export default connect(
+  () => ({}),
+  mapDispatchToProps
+)(CommentInput);
