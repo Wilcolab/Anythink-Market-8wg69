@@ -59,6 +59,6 @@ describe("CommentInput component", () => {
     const event = { target: { value: "sometext" } };
     component.find("textarea").simulate("change", event);
     component.find("form").simulate("submit");
-    expect(component.find("textarea").text()).toHaveLength(0);
+    expect(component.find("textarea").prop("value")).toHaveLength(0);
   });
 });
