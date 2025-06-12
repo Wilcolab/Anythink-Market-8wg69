@@ -57,8 +57,9 @@ describe("CommentInput component", () => {
     agent.Comments.create.mockResolvedValue(comment);
 
     const event = { target: { value: "sometext" } };
-    component.find("textarea").simulate("change", event);
-    component.find("form").simulate("submit");
-    expect(component.find("textarea").text()).toHaveLength(0);
+     component.find("textarea").simulate("change", event);
+    await component.find("form").props().onSubmit({ preventDefault: () => {} });
+    component.update();
+    expect(component.find("textarea").prop("value")).toHaveLength(0);
   });
 });
